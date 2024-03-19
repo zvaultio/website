@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zVault</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans', sans-serif;
+            color: white;
+            background-color: black; /* Assuming a dark theme for readability */
+            background-image: url('pexels-pixabay-207529.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        .copy {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .centered-text {
+            text-align: center;
+        }
+        .title {
+            font-size: 48pt;
+            text-shadow: #F0F 1px 0 10px;
+        }
+        .subtitle {
+            font-size: 18pt;
+            text-shadow: #F0F 1px 0 10px;
+        }
+        .subscript {
+            font-size: 10pt;
+            text-shadow: #F0F 1px 0 10px;
+            line-height: 0.5
+        }
+        .navigation {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 0;
+            text-align: center;
+            z-index: 1000;
+        }
+        .navigation a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 18pt;
+        }
+        section {
+            padding: 100px 20px;
+            text-align: center;
+            min-height: 100vh;
+            text-shadow: #F0F 1px 0 10px;
+        a:link {
+          color: red;
+          background-color: transparent;
+          text-decoration: none;
+        }
+
+        a:visited {
+          color: pink;
+          background-color: transparent;
+            text-decoration: none;
+        }
+
+        a:hover {
+          color: blue;
+          background-color: transparent;
+          text-decoration: underline;
+        }
+
+        a:active {
+          color: yellow;
+          background-color: transparent;
+          text-decoration: underline;
+        }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="navigation">
+        <a href="#home">Home</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#contact">Contact</a>
+        <a href="#code">Code</a>
+        <a href="#philosophy">Philosophy</a>
+    </div>
+
+    <div id="home" class="copy" >
+        <div class="centered-text">
+        <div class="title">zVault</div>
+        <div class="subtitle">An Open Source ZFS NAS for the community</div>
+        <br>
+        <br>
+        <br>
+        <div class="subtitle">The TrueNAS CORE story continues...</div>
+        </div>
+    </div>
+
+    <section id="roadmap"class="copy" >
+        <div>
+        <h2>Roadmap</h2>
+        <br><br>
+        <p>Roadmap coming soon...</p>
+        </div>
+    </section>
+
+    <section id="contact"class="copy" >
+        <div>
+        <h2>Contact</h2>
+        <br><br>
+        <p>Email team@zvault [dot] io</p>
+        </div>
+    </section>
+
+    <section id="code"class="copy" >
+        <div>
+        <h2>Code</h2>
+        <br><br>
+        <a href="https://github.com/zvaultio?tab=repositories"”>Github Repos</a>
+        </div>
+    </section>
+    <section id="philosophy"class="copy" >
+        <div>
+        <h2>Philosophy</h2>
+        <br><br>
+        <div class="title">Raison d'être:</div>
+        <div class="subtitle"><p>Coming soon...</p></div>
+        <br><br>
+        <div class="title">Core tenets:</div>
+        <br>
+        <div class="subtitle"><p>100% Open Source</p></div>
+        <div class="subtitle"><p>100% Private</p></div>
+        <div class="subscript">
+            <p>No tracking</p>
+            <p>No telemetry</p>
+            <p>No cookies</p>
+            <p>No email request</p>
+            <p>No newsletter</p>
+        </div>
+        </div>
+    </section>
+
+</body>
+</html>
