@@ -1,183 +1,463 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>zVault</title>
-	<style type="text/css">body {
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zVault - Open Source ZFS NAS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6200ea;
+            --secondary-color: #b388ff;
+            --dark-bg: rgba(10, 10, 20, 0.85);
+            --light-text: #f8f9fa;
+            --accent-color: #ff00ff;
+            --section-padding: 120px 20px;
+            --transition-speed: 0.3s;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
-            font-family: 'Noto Sans', sans-serif;
-            color: white;
-            background-color: black; /* Assuming a dark theme for readability */
-            background-image: url('pexels-pixabay-207529.jpg');
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--light-text);
+            background-color: #000;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('pexels-pixabay-207529.jpg');
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
+            line-height: 1.6;
         }
-        .copy {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-        .centered-text {
-            text-align: center;
-        }
-        .title {
-            font-size: 48pt;
-            text-shadow: #F0F 1px 0 10px;
-        }
-        .subtitle {
-            font-size: 18pt;
-            text-shadow: #F0F 1px 0 10px;
-        }
-        .subscript {
-            font-size: 10pt;
-            text-shadow: #F0F 1px 0 10px;
-            line-height: 0.5
-        }
+        
         .navigation {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 0;
-            text-align: center;
+            background: var(--dark-bg);
+            padding: 15px 0;
             z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all var(--transition-speed);
         }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
         .navigation a {
-            color: white;
-            margin: 0 15px;
+            color: var(--light-text);
+            margin: 0 20px;
             text-decoration: none;
-            font-size: 18pt;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            padding: 5px 0;
+            transition: all var(--transition-speed);
         }
-        section {
-            padding: 100px 20px;
+        
+        .navigation a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width var(--transition-speed);
+        }
+        
+        .navigation a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .navigation a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            min-height: 100vh;
-            text-shadow: #F0F 1px 0 10px;
-        a:link {
-          color: red;
-          background-color: transparent;
-          text-decoration: none;
+            position: relative;
+            overflow: hidden;
         }
-
-        a:visited {
-          color: pink;
-          background-color: transparent;
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(98, 0, 234, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 20px;
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        .title {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--light-text);
+            font-weight: 300;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
             text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all var(--transition-speed);
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(98, 0, 234, 0.4);
         }
-
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(98, 0, 234, 0.6);
+        }
+        
+        section {
+            padding: var(--section-padding);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            z-index: -1;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+        
+        .section-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            padding: 20px 40px;
+            position: relative;
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .timeline-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+        
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: all var(--transition-speed);
+        }
+        
         a:hover {
-          color: blue;
-          background-color: transparent;
-          text-decoration: underline;
+            color: var(--accent-color);
+            text-decoration: underline;
         }
-
-        a:active {
-          color: yellow;
-          background-color: transparent;
-          text-decoration: underline;
+        
+        .philosophy-item {
+            margin-bottom: 40px;
+            text-align: center;
         }
+        
+        .philosophy-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--secondary-color);
         }
-	</style>
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&amp;display=swap" rel="stylesheet" />
+        
+        .philosophy-text {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .philosophy-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .philosophy-list li {
+            background: rgba(98, 0, 234, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(179, 136, 255, 0.3);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 3rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .navigation a {
+                margin: 0 10px;
+                font-size: 0.9rem;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .navigation {
+                padding: 10px 0;
+            }
+            
+            .navigation a {
+                margin: 0 8px;
+                font-size: 0.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="navigation"><a href="#home">Home</a> <a href="#roadmap">Roadmap</a> <a href="#contact">Contact</a> <a href="#code">Code</a> <a href="#philosophy">Philosophy</a></div>
+    <nav class="navigation">
+        <div class="nav-container">
+            <a href="#home"><i class="fas fa-home"></i> Home</a>
+            <a href="#roadmap"><i class="fas fa-map"></i> Roadmap</a>
+            <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+            <a href="#code"><i class="fas fa-code"></i> Code</a>
+            <a href="#philosophy"><i class="fas fa-lightbulb"></i> Philosophy</a>
+        </div>
+    </nav>
 
-<div class="copy" id="home">
-<div class="centered-text">
-<div class="title">zVault</div>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="title">zVault</h1>
+            <p class="subtitle">An Open Source ZFS NAS for the community</p>
+            <p class="subtitle">A community based fork of TrueNAS CORE</p>
+            <a href="https://github.com/zvaultio/Community/releases/tag/zVault-13.3-MASTER-202505042329-ca844f8808" class="cta-button">
+                <i class="fas fa-download"></i> Download Latest Release
+            </a>
+        </div>
+    </section>
 
-<div class="subtitle">An Open Source ZFS NAS for the community</div>
-<br />
-<br />
-&nbsp;
-<div class="subtitle">A community based fork of TrueNAS CORE.<br />
-<br />
-The intial release of zVault.io can be downloaded from github.<br />
-<br />
-<a href="https://github.com/zvaultio/Community/releases/tag/zVault-13.3-MASTER-202502240515-8d9f8c8cc2">zVault-13.3-MASTER-202502240515-8d9f8c8cc2</a></div>
+    <section id="roadmap">
+        <div class="container">
+            <h2 class="section-title">Development Roadmap</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3><i class="fas fa-check-circle"></i> Initial 13.3 Release</h3>
+                    <p>February 25, 2025 - First public release of zVault</p>
+                </div>
+                <div class="timeline-item">
+                    <h3><i class="fas fa-hourglass-half"></i> Stable Release</h3>
+                    <p>After additional testing confirms that the release is stable, we will push a stable release.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3><i class="fas fa-code-branch"></i> 13.5 Migration</h3>
+                    <p>While we work on a stable release of 13.3, we will update to TrueNAS 13.5.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3><i class="fas fa-project-diagram"></i> 14.0 Planning</h3>
+                    <p>The move to 14.0 will be a very large and complex undertaking and will require investigation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="subtitle"></div>
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <div class="section-content" style="text-align: center;">
+                <p style="font-size: 1.2rem; margin-bottom: 30px;">Have questions or want to contribute? We'd love to hear from you!</p>
+                <div style="background: rgba(30, 30, 50, 0.7); padding: 30px; border-radius: 10px; backdrop-filter: blur(5px);">
+                    <i class="fas fa-envelope" style="font-size: 2rem; margin-bottom: 20px; color: var(--secondary-color);"></i>
+                    <p style="font-size: 1.3rem;">Email: team@zvault.io</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="subtitle"></div>
-</div>
-</div>
+    <section id="code">
+        <div class="container">
+            <h2 class="section-title">Source Code</h2>
+            <div class="section-content" style="text-align: center;">
+                <p style="font-size: 1.2rem; margin-bottom: 30px;">Unlike TrueNAS CORE, zVault is 100% open source. Check out our repositories and contribute to the project.</p>
+                <a href="https://github.com/zvaultio?tab=repositories" class="cta-button">
+                    <i class="fab fa-github"></i> View GitHub Repositories
+                </a>
+            </div>
+        </div>
+    </section>
 
-<section class="copy" id="roadmap">
-<div>
-<h2>Roadmap</h2>
-&nbsp;
+    <section id="philosophy">
+        <div class="container">
+            <h2 class="section-title">Our Philosophy</h2>
+            <div class="section-content">
+                <div class="philosophy-item">
+                    <h3 class="philosophy-title">Raison d'être</h3>
+                    <p class="philosophy-text">We believe FreeBSD is perfect for a NAS.</p>
+                    <p class="philosophy-text">We do not believe that Hyperconvergence is the solution for everyone.</p>
+                    <p class="philosophy-text">We harbor no ill-will towards iXsystems. We appreciate the work that they have done in the community for years and wish them the best of luck in their endeavors with TrueNAS SCALE.</p>
+                </div>
+                
+                <div class="philosophy-item">
+                    <h3 class="philosophy-title">Core Tenets</h3>
+                    <div class="philosophy-text">100% Open Source</div>
+                    <div class="philosophy-text">100% Private</div>
+                    
+                    <ul class="philosophy-list">
+                        <li><i class="fas fa-ban"></i> No tracking</li>
+                        <li><i class="fas fa-ban"></i> No telemetry</li>
+                        <li><i class="fas fa-ban"></i> No cookies</li>
+                        <li><i class="fas fa-ban"></i> No email request</li>
+                        <li><i class="fas fa-ban"></i> No newsletter</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<p>25-2-25 - Initial 13.3 release<br />
-<br />
-After additional testing confirms that the release is stable we will push a stable release.<br />
-This will be followed by moving to be based on 13.4, and then later 13.5.<br />
-<br />
-The move to 14.0 will be a very large and complex undertaking and will take much longer.<br />
-&nbsp;</p>
-</div>
-</section>
+    <footer style="background: var(--dark-bg); padding: 30px 0; text-align: center;">
+        <div class="container">
+            <p>&copy; 2025 zVault - An Open Source ZFS NAS for the community</p>
+            <div style="margin-top: 20px;">
+                <a href="https://github.com/zvaultio" style="margin: 0 10px; font-size: 1.5rem;"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
 
-<section class="copy" id="contact">
-<div>
-<h2>Contact</h2>
-&nbsp;
-
-<p>Email team@zvault [dot] io</p>
-</div>
-</section>
-
-<section class="copy" id="code">
-<div>
-<h2>Code</h2>
-<br />
-<br />
-<a href="https://github.com/zvaultio?tab=repositories">Github Repos</a></div>
-</section>
-
-<section class="copy" id="philosophy">
-<div>
-<h2>Philosophy</h2>
-&nbsp;
-
-<div class="title">Raison d&#39;&ecirc;tre:</div>
-
-<div class="subtitle">
-<p>We believe FreeBSD is perfect for a NAS.</p>
-&nbsp;
-
-<p>We do not believe that Hyperconvergence is the solution for everyone.</p>
-&nbsp;
-
-<p>We harbor no ill-will towards iXsystems. We appreciate the work that they have done in the community for years and wish them the best of luck in their endeavors with TrueNAS SCALE.</p>
-</div>
-&nbsp;
-
-<div class="title">Core tenets:</div>
-&nbsp;
-
-<div class="subtitle">
-<p>100% Open Source</p>
-</div>
-
-<div class="subtitle">
-<p>100% Private</p>
-</div>
-
-<div class="subscript">
-<p>No tracking</p>
-
-<p>No telemetry</p>
-
-<p>No cookies</p>
-
-<p>No email request</p>
-
-<p>No newsletter</p>
-</div>
-</div>
-</section>
+    <script>
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.navigation');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(10, 10, 20, 0.95)';
+                nav.style.padding = '10px 0';
+            } else {
+                nav.style.background = 'rgba(10, 10, 20, 0.85)';
+                nav.style.padding = '15px 0';
+            }
+        });
+    </script>
 </body>
 </html>
